@@ -1,0 +1,35 @@
+_displayctl_completions() {
+    local cur prev words cword
+    _init_completion || return
+
+    local commands="mirror extend second pc status list set brightness resolution refresh rotate save load profiles delete watch"
+
+    if [[ $cword -eq 1 ]]; then
+        COMPREPLY=($(compgen -W "$commands --verbose --dry-run --version --help" -- "$cur"))
+        return
+    fi
+
+    case "${words[1]}" in
+        mirror|extend)
+            COMPREPLY=($(compgen -W "--primary --arrange" -- "$cur"))
+            ;;
+        second|pc|status|list|profiles)
+            ;;
+        set)
+            COMPREPLY=($(compgen -W "--mode --primary --arrange" -- "$cur"))
+            ;;
+        brightness)
+            COMPREPLY=($(compgen -W "--display" -- "$cur"))
+            ;;
+        resolution|refresh|rotate)
+            COMPREPLY=($(compgen -W "--display" -- "$cur"))
+            ;;
+        save|load|delete)
+            COMPREPLY=($(compgen -W "--profile" -- "$cur"))
+            ;;
+        watch)
+            COMPREPLY=($(compgen -W "--trigger" -- "$cur"))
+            ;;
+    esac
+} &&
+complete -F _displayctl_completions displayctl

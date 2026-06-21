@@ -1,0 +1,14 @@
+[Unit]
+Description=displayctl hotplug monitor watcher
+Documentation=man:displayctl(1)
+Wants=display-manager.service
+After=display-manager.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/displayctl watch
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target

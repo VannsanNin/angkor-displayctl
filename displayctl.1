@@ -1,0 +1,104 @@
+.TH DISPLAYCTL 1 "2026-06-21" "1.0.0" "User Commands"
+.SH NAME
+displayctl \- Multi-monitor display mode controller
+.SH SYNOPSIS
+.B displayctl
+[\fI\-v\fR] [\fI\-\-dry\-run\fR] \fIcommand\fR [options]
+.SH DESCRIPTION
+displayctl controls multi-monitor display modes on Linux. It supports X11 via
+xrandr and Wayland via wlr-randr/swaymsg with automatic backend detection.
+.SH OPTIONS
+.TP
+.B \-v, \-\-verbose
+Show raw backend commands being executed.
+.TP
+.B \-\-dry\-run
+Print backend commands without executing them.
+.TP
+.B \-\-version
+Show version and exit.
+.TP
+.B \-\-help
+Show help message and exit.
+.SH COMMANDS
+.TP
+.B mirror [\-\-primary NAME] [\-\-arrange LAYOUT]
+Duplicate the primary display to all connected monitors.
+.TP
+.B extend [\-\-primary NAME] [\-\-arrange LAYOUT]
+Extend desktop across all monitors (default: left-to-right).
+.TP
+.B second
+Disable primary display, activate secondary only.
+.TP
+.B pc
+Disable external displays, activate internal/primary only.
+.TP
+.B status
+Show all connected displays and current mode in a rich table.
+.TP
+.B list
+List monitors with resolution, refresh rate, and EDID name.
+.TP
+.B set \-\-mode MODE [\-\-primary NAME] [\-\-arrange LAYOUT]
+Set display mode explicitly.
+.TP
+.B brightness VALUE [\-\-display NAME]
+Set brightness (0\-100) on all or specified display.
+.TP
+.B resolution RESOLUTION \-\-display NAME
+Set resolution (e.g. 1920x1080) on specified display.
+.TP
+.B refresh HZ \-\-display NAME
+Set refresh rate on specified display.
+.TP
+.B rotate ROTATION \-\-display NAME
+Set rotation (normal|left|right|inverted) on specified display.
+.TP
+.B save \-\-profile NAME
+Save current display layout as a named profile.
+.TP
+.B load \-\-profile NAME
+Restore a saved display layout.
+.TP
+.B profiles
+List all saved profiles.
+.TP
+.B delete \-\-profile NAME
+Delete a saved profile.
+.TP
+.B watch [\-\-trigger]
+Daemon mode: auto-apply profile on monitor hotplug.
+.SH FILES
+.TP
+.I ~/.config/displayctl/profiles.json
+User profiles.
+.TP
+.I /etc/displayctl/config.json
+System-wide configuration.
+.TP
+.I ~/.local/share/displayctl/displayctl.log
+Log file.
+.SH EXAMPLES
+.TP
+displayctl mirror
+Duplicate all screens.
+.TP
+displayctl extend
+Extend desktop across monitors.
+.TP
+displayctl save \-\-profile home
+Save current layout as "home".
+.TP
+displayctl load \-\-profile home
+Restore "home" layout.
+.TP
+displayctl watch
+Start hotplug daemon.
+.SH BACKEND AUTO-DETECTION
+displayctl detects the display server via $XDG_SESSION_TYPE or $WAYLAND_DISPLAY.
+On X11 it uses xrandr; on Wayland it uses wlr-randr or swaymsg.
+.SH SEE ALSO
+.IR xrandr (1),
+.IR wlr-randr (1),
+.IR swaymsg (1)

@@ -1,0 +1,68 @@
+#compdef displayctl
+
+_displayctl() {
+    local state
+
+    _arguments -C \
+        '(-v --verbose)'{-v,--verbose}'[Show raw backend commands]' \
+        '--dry-run[Print commands without executing]' \
+        '(-)--version[Show version]' \
+        '(-)--help[Show help]' \
+        '1: :->command' \
+        '*: :->args'
+
+    case $state in
+        command)
+            _values 'command' \
+                'mirror[Duplicate primary display to all monitors]' \
+                'extend[Extend desktop across all monitors]' \
+                'second[Second screen only]' \
+                'pc[PC screen only]' \
+                'status[Show all connected displays and current mode]' \
+                'list[List monitors with details]' \
+                'set[Set display mode]' \
+                'brightness[Set brightness]' \
+                'resolution[Set resolution]' \
+                'refresh[Set refresh rate]' \
+                'rotate[Set rotation]' \
+                'save[Save current layout as profile]' \
+                'load[Load a saved profile]' \
+                'profiles[List saved profiles]' \
+                'delete[Delete a profile]' \
+                'watch[Daemon mode for hotplug]'
+            ;;
+        args)
+            case $line[1] in
+                mirror|extend)
+                    _arguments \
+                        '--primary[Primary display]' \
+                        '--arrange[Arrangement: left-right or right-left]'
+                    ;;
+                set)
+                    _arguments \
+                        '--mode[Display mode]:mode:(mirror duplicate extend second pc)' \
+                        '--primary[Primary display]' \
+                        '--arrange[Arrangement]:arrange:(left-right right-left)'
+                    ;;
+                brightness)
+                    _arguments \
+                        '--display[Target display]'
+                    ;;
+                resolution|refresh|rotate)
+                    _arguments \
+                        '--display[Target display]:display'
+                    ;;
+                save|load|delete)
+                    _arguments \
+                        '--profile[Profile name]:profile'
+                    ;;
+                watch)
+                    _arguments \
+                        '--trigger[Trigger hotplug action once]'
+                    ;;
+            esac
+            ;;
+    esac
+}
+
+_displayctl
