@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Display Control
+GenericName=Monitor Display Controller
+Comment=Multi-monitor display mode controller
+Exec=displayctl-gui
+Icon=video-display-symbolic
+Terminal=false
+Categories=Settings;Hardware;DesktopSettings;
+Keywords=display;monitor;screen;mirror;extend;
+StartupNotify=true
+X-GNOME-Provides=displayctl

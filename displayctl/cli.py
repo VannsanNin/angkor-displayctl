@@ -233,6 +233,13 @@ def tui(ctx: click.Context) -> None:
     curses_tui(backend, dry_run=dry_run, verbose=verbose)
 
 
+@cli.command()
+def gui() -> None:
+    """Launch the modern GTK4 GUI application."""
+    from displayctl.gui import run_gui
+    run_gui()
+
+
 def main() -> None:
     cli(auto_envvar_prefix="DISPLAYCTL")
 

@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="displayctl",
-    version="1.0.0",
+    version="1.1.0",
     description="Multi-monitor display mode controller",
     long_description=open("README.md").read() if __import__("os").path.exists("README.md") else "",
     long_description_content_type="text/markdown",
@@ -23,6 +23,10 @@ setup(
     entry_points={
         "console_scripts": [
             "displayctl=displayctl.cli:main",
+            "displayctl-gui=displayctl.gui:run_gui",
+        ],
+        "gui_scripts": [
+            "displayctl-gui=displayctl.gui:run_gui",
         ],
     },
     classifiers=[

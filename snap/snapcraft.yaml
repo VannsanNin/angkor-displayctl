@@ -1,12 +1,13 @@
 name: displayctl
 base: core24
-version: "1.0.0"
+version: "1.1.0"
 summary: Multi-monitor display mode controller
 description: |
-  Control display modes (mirror, extend, second-only, PC-only)
-  via CLI. Supports X11 (xrandr) and Wayland (wlr-randr) backends
-  with automatic detection. Features profile save/load with EDID
-  fingerprinting and hotplug daemon.
+  Modern multi-monitor display mode controller for Linux.
+  Supports both CLI and GTK4 GUI interfaces. Backends for
+  X11 (xrandr) and Wayland (wlr-randr/GNOME) with automatic
+  detection. Features profile save/load with EDID fingerprinting,
+  brightness control, resolution switching, and hotplug daemon.
 
 license: MIT
 grade: stable
@@ -20,6 +21,18 @@ source-code: https://github.com/VannsanNin/angkor-displayctl
 apps:
   displayctl:
     command: bin/displayctl
+    plugs:
+      - x11
+      - wayland
+      - hardware-observe
+      - system-observe
+      - home
+      - network
+      - process-control
+
+  displayctl-gui:
+    command: bin/displayctl-gui
+    extensions: [gnome]
     plugs:
       - x11
       - wayland
@@ -48,8 +61,16 @@ parts:
     source: .
     build-packages:
       - python3-dev
+      - libgirepository1.0-dev
+      - libgtk-4-dev
+      - libadwaita-1-dev
     stage-packages:
       - x11-xserver-utils
       - python3-rich
       - python3-click
+      - python3-gi
+      - gir1.2-gtk-4.0
+      - gir1.2-adw-1
       - wlr-randr
+    build-environment:
+      - DISPLAYCTL_GUI: "1"
