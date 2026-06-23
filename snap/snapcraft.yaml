@@ -1,0 +1,51 @@
+name: displayctl
+base: core24
+version: "1.0.0"
+summary: Multi-monitor display mode controller
+description: |
+  Control display modes (mirror, extend, second-only, PC-only)
+  via CLI. Supports X11 (xrandr) and Wayland (wlr-randr) backends
+  with automatic detection. Features profile save/load with EDID
+  fingerprinting and hotplug daemon.
+
+license: MIT
+grade: stable
+confinement: strict
+website: https://github.com/VannsanNin/angkor-displayctl
+
+apps:
+  displayctl:
+    command: bin/displayctl
+    plugs:
+      - x11
+      - wayland
+      - hardware-observe
+      - system-observe
+      - home
+      - network
+      - process-control
+
+  watch:
+    command: bin/displayctl watch
+    daemon: simple
+    restart-condition: on-failure
+    plugs:
+      - x11
+      - wayland
+      - hardware-observe
+      - system-observe
+      - home
+      - network
+      - process-control
+
+parts:
+  displayctl:
+    plugin: python
+    source: .
+    build-packages:
+      - python3-dev
+    stage-packages:
+      - x11-xserver-utils
+      - python3-rich
+      - python3-click
+      - wlr-randr

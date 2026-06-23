@@ -13,6 +13,12 @@ Multi-monitor display mode controller for Linux. Supports X11 (xrandr) and Wayla
 
 ## Installation
 
+### From Snap Store (recommended)
+
+```bash
+sudo snap install displayctl
+```
+
 ### From APT repository
 
 ```bash
