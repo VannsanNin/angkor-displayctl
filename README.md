@@ -17,10 +17,11 @@ Multi-monitor display mode controller for Linux. Supports X11 (xrandr) and Wayla
 
 ```bash
 # Add GPG key
-curl -fsSL https://your-domain.com/apt/gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/displayctl.gpg
+curl -fsSL https://vannsannin.github.io/angkor-displayctl/gpg.key \
+  | sudo gpg --dearmor -o /usr/share/keyrings/displayctl.gpg
 
 # Add repository
-echo "deb [signed-by=/usr/share/keyrings/displayctl.gpg] https://your-domain.com/apt jammy main" \
+echo "deb [signed-by=/usr/share/keyrings/displayctl.gpg] https://vannsannin.github.io/angkor-displayctl jammy main" \
   | sudo tee /etc/apt/sources.list.d/displayctl.list
 
 # Install
