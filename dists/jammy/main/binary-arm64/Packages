@@ -1,0 +1,21 @@
+Package: displayctl
+Version: 1.0.0-1
+Architecture: all
+Maintainer: Displayctl Maintainer <maintainer@displayctl.dev>
+Installed-Size: 34
+Depends: init-system-helpers (>= 1.52), python3-click (>= 8.0), python3-rich (>= 10.0), x11-xserver-utils, udev
+Recommends: wlr-randr, edid-decode, python3-pyinotify, libnotify-bin
+Homepage: https://github.com/displayctl/displayctl
+Priority: optional
+Section: utils
+Filename: pool/main/d/displayctl/displayctl_1.0.0-1_all.deb
+Size: 6942
+SHA256: 57b49d70e0966425bd047591f6f12396e226a7ae2dba0a38b56cee8c233a3fad
+SHA1: 8bf66f087602dba14e9381fe76074f277c5553e0
+MD5sum: 7a48e73c51f314789e0e68d28daa003f
+Description: Multi-monitor display mode controller
+ Control display modes (mirror, extend, second-only, PC-only)
+ via CLI. Supports X11 (xrandr) and Wayland (wlr-randr) backends
+ with automatic detection. Features profile save/load with EDID
+ fingerprinting and hotplug daemon.
+

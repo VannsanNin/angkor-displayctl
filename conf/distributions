@@ -1,0 +1,21 @@
+Codename: jammy
+Suite: stable
+Components: main
+Architectures: amd64 arm64 source
+SignWith: yes
+Description: displayctl APT repository for Ubuntu jammy
+
+Codename: focal
+Suite: stable
+Components: main
+Architectures: amd64 arm64 source
+SignWith: yes
+Description: displayctl APT repository for Ubuntu focal
+
+Codename: noble
+Suite: stable
+Components: main
+Architectures: amd64 arm64 source
+SignWith: yes
+Description: displayctl APT repository for Ubuntu noble
+

@@ -1,0 +1,46 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Suite: stable
+Codename: focal
+Date: Sun, 21 Jun 2026 13:42:14 UTC
+Architectures: amd64 arm64
+Components: main
+Description: displayctl APT repository for Ubuntu focal
+MD5Sum:
+ 2c25bafd39aec5f85c94dba146757811 913 main/binary-amd64/Packages
+ e83f814be46ffc0883ab3dec7661d1c9 598 main/binary-amd64/Packages.gz
+ b3a11d476cc1fc3dfaaf7f2676d9a445 108 main/binary-amd64/Release
+ 2c25bafd39aec5f85c94dba146757811 913 main/binary-arm64/Packages
+ e83f814be46ffc0883ab3dec7661d1c9 598 main/binary-arm64/Packages.gz
+ a7855427e9de81e33a4daa47304cae9a 108 main/binary-arm64/Release
+ d41d8cd98f00b204e9800998ecf8427e 0 main/source/Sources
+ 7029066c27ac6f5ef18d660d5741979a 20 main/source/Sources.gz
+ 4f4c753b8c0829b330e85edb45a5517b 109 main/source/Release
+SHA1:
+ ecfb8ca2a9a6194be371370d9d3b6a70212daf94 913 main/binary-amd64/Packages
+ ecee2f724697e712bd36ebcafcc303c4e66cdd3b 598 main/binary-amd64/Packages.gz
+ af3e0388364854846dbcc9e178cd9261feeb11ff 108 main/binary-amd64/Release
+ ecfb8ca2a9a6194be371370d9d3b6a70212daf94 913 main/binary-arm64/Packages
+ ecee2f724697e712bd36ebcafcc303c4e66cdd3b 598 main/binary-arm64/Packages.gz
+ 39fe78e30dd7da98a49ce3e9268be01ab17a103c 108 main/binary-arm64/Release
+ da39a3ee5e6b4b0d3255bfef95601890afd80709 0 main/source/Sources
+ 46c6643f07aa7f6bfe7118de926b86defc5087c4 20 main/source/Sources.gz
+ 76b4f41ca21f43e3850380e06c31708a049e3bce 109 main/source/Release
+SHA256:
+ f4eb740841e869ffea3ab06afd53a05b3fff000f7c6924023f68b241f7ba05ae 913 main/binary-amd64/Packages
+ 495db1790b46cc2a65ff1cf97e3b8807abbb7540bf1490e6561ef192e961f39b 598 main/binary-amd64/Packages.gz
+ 60c26b28ae6edafca74a37d9dfafe1f2bfa3a8c77fa6f790ba8d4a0dca571a6a 108 main/binary-amd64/Release
+ f4eb740841e869ffea3ab06afd53a05b3fff000f7c6924023f68b241f7ba05ae 913 main/binary-arm64/Packages
+ 495db1790b46cc2a65ff1cf97e3b8807abbb7540bf1490e6561ef192e961f39b 598 main/binary-arm64/Packages.gz
+ f09a1d19f06ea3bfc433556454b41943f490baea9193388bc4a6d4102967c733 108 main/binary-arm64/Release
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 0 main/source/Sources
+ 59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2 20 main/source/Sources.gz
+ f34be8cf3b2abcc479c6b8554bfcf2ef885d0dc6355852d8c9df668bd4bbb7c5 109 main/source/Release
+-----BEGIN PGP SIGNATURE-----
+
+iHUEARYKAB0WIQThRHWIXT/UDySjOzUvJJvaxmWifgUCajfqNgAKCRAvJJvaxmWi
+fmTAAP0avmkk9UCrF+sf8CoMlJjmzWmOwer0EtZC8Z5xd7q3+AD/Tr7Onvbznqhb
+MwHvzVgcj7Ick5Zv71/P2UAyFrGHXgU=
+=Nav4
+-----END PGP SIGNATURE-----
