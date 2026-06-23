@@ -4,9 +4,9 @@ Priority: optional
 Maintainer: Displayctl Maintainer <maintainer@displayctl.dev>
 Build-Depends: debhelper-compat (= 13), dh-python, python3-all (>= 3.10), python3-setuptools
 Standards-Version: 4.6.2
-Homepage: https://github.com/displayctl/displayctl
-Vcs-Browser: https://github.com/displayctl/displayctl
-Vcs-Git: https://github.com/displayctl/displayctl.git
+Homepage: https://github.com/VannsanNin/angkor-displayctl
+Vcs-Browser: https://github.com/VannsanNin/angkor-displayctl
+Vcs-Git: https://github.com/VannsanNin/angkor-displayctl.git
 Rules-Requires-Root: no
 
 Package: displayctl

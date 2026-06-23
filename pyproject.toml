@@ -27,7 +27,7 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/displayctl/displayctl"
+Homepage = "https://github.com/VannsanNin/angkor-displayctl"
 
 [project.scripts]
 displayctl = "displayctl.cli:main"
