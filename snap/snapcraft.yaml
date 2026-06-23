@@ -11,7 +11,11 @@ description: |
 license: MIT
 grade: stable
 confinement: strict
+title: displayctl
 website: https://github.com/VannsanNin/angkor-displayctl
+contact: maintainer@displayctl.dev
+issues: https://github.com/VannsanNin/angkor-displayctl/issues
+source-code: https://github.com/VannsanNin/angkor-displayctl
 
 apps:
   displayctl:
