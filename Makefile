@@ -7,10 +7,13 @@ ZSHCOMPDIR ?= $(DATADIR)/zsh/site-functions
 SYSTEMD_USER_DIR ?= $(PREFIX)/lib/systemd/user
 PYTHON ?= python3
 
-.PHONY: install uninstall deb repo clean
+.PHONY: build install uninstall deb repo clean
+
+build:
+	@true
 
 install:
-	$(PYTHON) -m pip install --root=$(DESTDIR)/ --no-deps .
+	$(PYTHON) -m pip install --root=$(DESTDIR)/ --prefix=/usr --no-deps .
 	install -Dm755 displayctl.sh $(DESTDIR)$(BINDIR)/displayctl
 	install -Dm644 displayctl.1 $(DESTDIR)$(MANDIR)/displayctl.1
 	install -Dm644 completions/bash/displayctl $(DESTDIR)$(COMPDIR)/displayctl
@@ -34,7 +37,7 @@ repo:
 
 clean:
 	rm -rf build/ dist/ *.egg-info/ .pybuild/
-	rm -f debian/.debhelper/ debian/debhelper-build-stamp
+	rm -rf debian/.debhelper/ debian/debhelper-build-stamp
 	rm -f debian/displayctl.debhelper.log debian/files
 	rm -rf debian/displayctl/
 	rm -rf apt-repo/pool/ apt-repo/dists/

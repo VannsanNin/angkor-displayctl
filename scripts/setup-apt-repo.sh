@@ -15,12 +15,14 @@ echo "==> Setting up APT repository structure..."
 
 mkdir -p "$CONF_DIR" "$POOL_DIR"
 
+ARCHES="amd64 arm64 source"
+
 # Create distributions config
 cat > "$CONF_DIR/distributions" << 'DISTEOF'
 Codename: jammy
 Suite: stable
 Components: main
-Architectures: all source
+Architectures: amd64 arm64 source
 SignWith: yes
 Description: displayctl APT repository for Ubuntu jammy
 
@@ -32,7 +34,7 @@ for codename in "${CODENAMES[@]:1}"; do
 Codename: $codename
 Suite: stable
 Components: main
-Architectures: all source
+Architectures: amd64 arm64 source
 SignWith: yes
 Description: displayctl APT repository for Ubuntu $codename
 

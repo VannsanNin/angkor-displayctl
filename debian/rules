@@ -2,11 +2,9 @@
 %:
 	dh $@ --with python3
 
-override_dh_install:
-	dh_install
-	# Install displayctl binary as a console script
-	mkdir -p debian/displayctl/usr/bin
-	# The entry point is registered via setup.py console_scripts
+override_dh_auto_install:
+	dh_auto_install
+	rm -rf debian/displayctl/usr/local
 
 override_dh_installdocs:
 	dh_installdocs README.md
