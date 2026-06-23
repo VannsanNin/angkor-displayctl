@@ -6,6 +6,7 @@ COMPDIR ?= $(DATADIR)/bash-completion/completions
 ZSHCOMPDIR ?= $(DATADIR)/zsh/site-functions
 SYSTEMD_USER_DIR ?= $(PREFIX)/lib/systemd/user
 APPDIR ?= $(DATADIR)/applications
+ICONDIR ?= $(DATADIR)/icons/hicolor
 PYTHON ?= python3
 
 .PHONY: build install uninstall deb repo clean
@@ -22,6 +23,10 @@ install:
 	install -Dm644 completions/zsh/_displayctl $(DESTDIR)$(ZSHCOMPDIR)/_displayctl
 	install -Dm644 displayctl-watch.service $(DESTDIR)$(SYSTEMD_USER_DIR)/displayctl-watch.service
 	install -Dm644 displayctl-gui.desktop $(DESTDIR)$(APPDIR)/displayctl-gui.desktop
+	install -Dm644 icons/hicolor/16x16/apps/displayctl.png $(DESTDIR)$(ICONDIR)/16x16/apps/displayctl.png
+	install -Dm644 icons/hicolor/32x32/apps/displayctl.png $(DESTDIR)$(ICONDIR)/32x32/apps/displayctl.png
+	install -Dm644 icons/hicolor/48x48/apps/displayctl.png $(DESTDIR)$(ICONDIR)/48x48/apps/displayctl.png
+	install -Dm644 icons/hicolor/128x128/apps/displayctl.png $(DESTDIR)$(ICONDIR)/128x128/apps/displayctl.png
 	gzip -f $(DESTDIR)$(MANDIR)/displayctl.1 2>/dev/null || true
 
 uninstall:
@@ -33,6 +38,10 @@ uninstall:
 	-rm -f $(DESTDIR)$(ZSHCOMPDIR)/_displayctl
 	-rm -f $(DESTDIR)$(SYSTEMD_USER_DIR)/displayctl-watch.service
 	-rm -f $(DESTDIR)$(APPDIR)/displayctl-gui.desktop
+	-rm -f $(DESTDIR)$(ICONDIR)/16x16/apps/displayctl.png
+	-rm -f $(DESTDIR)$(ICONDIR)/32x32/apps/displayctl.png
+	-rm -f $(DESTDIR)$(ICONDIR)/48x48/apps/displayctl.png
+	-rm -f $(DESTDIR)$(ICONDIR)/128x128/apps/displayctl.png
 
 deb:
 	scripts/build-deb.sh

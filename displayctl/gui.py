@@ -203,6 +203,13 @@ class DisplayCtlApp(Adw.Application):
         self._profile_list: list[str] = []
         self._backend_ops: list[tuple] = []
 
+    def do_startup(self):
+        Adw.Application.do_startup(self)
+        icon_theme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default())
+        icon_path = os.path.join(os.path.dirname(__file__), "..", "icons", "hicolor")
+        icon_theme.add_search_path(os.path.abspath(icon_path))
+        self.set_default_icon_name("displayctl")
+
     def do_activate(self):
         try:
             setup_logging()
@@ -213,6 +220,7 @@ class DisplayCtlApp(Adw.Application):
         win = Adw.ApplicationWindow(application=self)
         win.set_title(f"{__app_name__} - Display Controller")
         win.set_default_size(900, 700)
+        win.set_icon_name("displayctl")
 
         main_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 
