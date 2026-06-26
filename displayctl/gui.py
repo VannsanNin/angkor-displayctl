@@ -202,7 +202,7 @@ class MonitorWidget(Gtk.Frame):
 class DisplayCtlApp(Adw.Application):
     def __init__(self):
         super().__init__(
-            application_id="dev.displayctl.gui",
+            application_id=None,
             flags=Gio.ApplicationFlags.FLAGS_NONE,
         )
         self._backend: Optional[DisplayBackend] = None

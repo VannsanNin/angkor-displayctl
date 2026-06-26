@@ -42,7 +42,6 @@ apps:
       - home
       - network
       - process-control
-      - dbus
 
   watch:
     command: bin/displayctl watch
@@ -57,12 +56,6 @@ apps:
       - home
       - network
       - process-control
-
-plugs:
-  dbus:
-    interface: dbus
-    bus: session
-    name: dev.displayctl.gui
 
 parts:
   displayctl:
