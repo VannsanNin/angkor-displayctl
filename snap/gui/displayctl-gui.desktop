@@ -3,6 +3,7 @@ Type=Application
 Name=Display Control
 GenericName=Monitor Display Controller
 Comment=Multi-monitor display mode controller
+Exec=displayctl-gui
 Icon=${SNAP}/meta/gui/displayctl-gui.png
 Terminal=false
 Categories=Settings;X-Hardware;DesktopSettings;
