@@ -1,6 +1,6 @@
 name: displayctl
 base: core24
-version: "1.1.0"
+version: "1.1.1"
 summary: Multi-monitor display mode controller
 description: |
   Modern multi-monitor display mode controller for Linux.
@@ -21,6 +21,7 @@ source-code: https://github.com/VannsanNin/angkor-displayctl
 apps:
   displayctl:
     command: bin/displayctl
+    extensions: [gnome]
     plugs:
       - x11
       - wayland
@@ -46,6 +47,7 @@ apps:
     command: bin/displayctl watch
     daemon: simple
     restart-condition: on-failure
+    extensions: [gnome]
     plugs:
       - x11
       - wayland

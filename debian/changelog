@@ -1,3 +1,11 @@
+displayctl (1.1.1-1) unstable; urgency=medium
+
+  * Fix ModuleNotFoundError: No module named 'gi' in Snap (add gnome extension)
+  * Fix missing app icon in Ubuntu App Center (add snap/gui/ desktop file)
+  * Guard gi imports with try/except for graceful fallback
+
+ -- Displayctl Maintainer <maintainer@displayctl.dev>  Thu, 26 Jun 2026 00:00:00 +0000
+
 displayctl (1.0.0-1) unstable; urgency=medium
 
   * Initial release.

@@ -2,7 +2,11 @@ from __future__ import annotations
 import logging
 from typing import Optional
 
-from gi.repository import Gio, GLib
+try:
+    from gi.repository import Gio, GLib
+except ImportError:
+    Gio = None  # type: ignore
+    GLib = None  # type: ignore
 
 from displayctl.backends.base import DisplayBackend
 from displayctl.display import Display

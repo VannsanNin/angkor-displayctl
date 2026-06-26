@@ -5,10 +5,17 @@ import threading
 import logging
 from typing import Optional
 
-import gi
-gi.require_version("Gtk", "4.0")
-gi.require_version("Adw", "1")
-from gi.repository import Gtk, Adw, GLib, Gio, Gdk
+try:
+    import gi
+    gi.require_version("Gtk", "4.0")
+    gi.require_version("Adw", "1")
+    from gi.repository import Gtk, Adw, GLib, Gio, Gdk
+except ImportError:
+    Gtk = None  # type: ignore
+    Adw = None  # type: ignore
+    GLib = None  # type: ignore
+    Gio = None  # type: ignore
+    Gdk = None  # type: ignore
 
 from displayctl import __version__, __app_name__
 from displayctl.display import Display
@@ -208,7 +215,6 @@ class DisplayCtlApp(Adw.Application):
         icon_theme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default())
         icon_path = os.path.join(os.path.dirname(__file__), "..", "icons", "hicolor")
         icon_theme.add_search_path(os.path.abspath(icon_path))
-        self.set_default_icon_name("displayctl")
 
     def do_activate(self):
         try:

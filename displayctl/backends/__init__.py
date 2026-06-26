@@ -4,7 +4,10 @@ from displayctl.utils import detect_session_type, which
 from displayctl.backends.base import DisplayBackend
 from displayctl.backends.xrandr import XrandrBackend
 from displayctl.backends.wayland import WaylandBackend
-from displayctl.backends.gnome import GnomeBackend
+try:
+    from displayctl.backends.gnome import GnomeBackend
+except ImportError:
+    GnomeBackend = None  # type: ignore
 
 log = logging.getLogger("displayctl")
 
@@ -27,8 +30,10 @@ def get_backend() -> DisplayBackend:
     session = detect_session_type()
     if session == "wayland":
         if _is_gnome():
-            log.debug("Using GNOME Wayland backend (Mutter D-Bus API)")
-            return GnomeBackend()
+            if GnomeBackend is not None:
+                log.debug("Using GNOME Wayland backend (Mutter D-Bus API)")
+                return GnomeBackend()
+            log.debug("GNOME session detected but gi module not available; skipping GNOME backend")
         if which("wlr-randr") or which("swaymsg"):
             log.debug("Using Wayland backend (wlr-randr/swaymsg detected)")
             return WaylandBackend()
