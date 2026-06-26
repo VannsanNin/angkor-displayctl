@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="displayctl",
-    version="1.1.3",
+    version="1.1.4",
     description="Multi-monitor display mode controller",
     long_description=open("README.md").read() if __import__("os").path.exists("README.md") else "",
     long_description_content_type="text/markdown",
