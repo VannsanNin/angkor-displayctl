@@ -31,7 +31,6 @@ EOF
         ;;
 esac
 
-# dh_installdeb will replace this with shell code automatically
-# for generating maintainer scripts
+#DEBHELPER#
 
 exit 0

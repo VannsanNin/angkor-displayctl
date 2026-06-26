@@ -28,6 +28,13 @@ Thumbs.db
 *.deb
 *.rpm
 
+# Snapcraft build artifacts
+parts/
+prime/
+stage/
+.craft/
+*.snap
+
 # Debian packaging build artifacts
 debian/.debhelper/
 debian/files

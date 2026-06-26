@@ -10,7 +10,7 @@ try:
     gi.require_version("Gtk", "4.0")
     gi.require_version("Adw", "1")
     from gi.repository import Gtk, Adw, GLib, Gio, Gdk
-except ImportError:
+except (ImportError, ValueError):
     Gtk = None  # type: ignore
     Adw = None  # type: ignore
     GLib = None  # type: ignore
@@ -488,6 +488,10 @@ class DisplayCtlApp(Adw.Application):
 
 
 def run_gui():
+    if Gtk is None:
+        print("Error: PyGObject (gi) with GTK 4.0 is required for the GUI. "
+              "Install python3-gi and gir1.2-gtk-4.0, or use the snap package.", file=sys.stderr)
+        sys.exit(1)
     app = DisplayCtlApp()
     exit_code = app.run(sys.argv)
     sys.exit(exit_code)
