@@ -33,7 +33,6 @@ apps:
 
   displayctl-gui:
     command: bin/displayctl-gui
-    desktop: snap/gui/displayctl.desktop
     extensions: [gnome]
     plugs:
       - x11
