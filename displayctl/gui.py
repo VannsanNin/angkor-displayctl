@@ -1,6 +1,7 @@
 from __future__ import annotations
 import sys
 import os
+import shlex
 import threading
 import logging
 from typing import Optional
@@ -11,8 +12,17 @@ try:
     gi.require_version("Adw", "1")
     from gi.repository import Gtk, Adw, GLib, Gio, Gdk
 except (ImportError, ValueError):
-    Gtk = None  # type: ignore
-    Adw = None  # type: ignore
+    class _MissingGtk:
+        Frame = object
+        Orientation = object()
+        Align = object()
+        INVALID_LIST_POSITION = 4294967295
+
+    class _MissingAdw:
+        Application = object
+
+    Gtk = _MissingGtk()  # type: ignore
+    Adw = _MissingAdw()  # type: ignore
     GLib = None  # type: ignore
     Gio = None  # type: ignore
     Gdk = None  # type: ignore
@@ -35,6 +45,9 @@ class MonitorWidget(Gtk.Frame):
         self._display = display
         self._backend = backend
         self._app = app
+        self._is_refreshing = False
+        self._resolution_handler_id: Optional[int] = None
+        self._rotation_handler_id: Optional[int] = None
         self.set_css_classes(["card"])
 
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
@@ -49,7 +62,8 @@ class MonitorWidget(Gtk.Frame):
         header_box.append(indicator)
 
         self._name_label = Gtk.Label()
-        self._name_label.set_markup(f"<b>{display.name}</b>")
+        escaped_name = GLib.markup_escape_text(display.name) if GLib else display.name
+        self._name_label.set_markup(f"<b>{escaped_name}</b>")
         self._name_label.set_halign(Gtk.Align.START)
         header_box.append(self._name_label)
 
@@ -124,6 +138,11 @@ class MonitorWidget(Gtk.Frame):
     def _populate_resolutions(self, display: Display):
         modes = display.modes
         if not modes:
+            if self._resolution_handler_id:
+                self._res_dropdown.disconnect(self._resolution_handler_id)
+                self._resolution_handler_id = None
+            self._res_dropdown.set_model(Gtk.StringList.new(["Current resolution"]))
+            self._res_dropdown.set_selected(0)
             self._res_dropdown.set_sensitive(False)
             return
         seen = set()
@@ -138,12 +157,19 @@ class MonitorWidget(Gtk.Frame):
                 if m["width"] == display.width and m["height"] == display.height:
                     current_idx = len(items) - 1
         model = Gtk.StringList.new(items)
+        if self._resolution_handler_id:
+            self._res_dropdown.disconnect(self._resolution_handler_id)
+            self._resolution_handler_id = None
         self._res_dropdown.set_model(model)
         self._res_dropdown.set_selected(current_idx)
-        self._res_dropdown.connect("notify::selected", self._on_resolution_changed)
+        self._resolution_handler_id = self._res_dropdown.connect(
+            "notify::selected", self._on_resolution_changed
+        )
         self._res_dropdown.set_sensitive(True)
 
     def _on_resolution_changed(self, dropdown: Gtk.DropDown, *args):
+        if self._is_refreshing:
+            return
         pos = dropdown.get_selected()
         if pos == Gtk.INVALID_LIST_POSITION:
             return
@@ -154,6 +180,8 @@ class MonitorWidget(Gtk.Frame):
             )
 
     def _on_rotation_changed(self, dropdown: Gtk.DropDown, *args):
+        if self._is_refreshing:
+            return
         pos = dropdown.get_selected()
         if pos == Gtk.INVALID_LIST_POSITION:
             return
@@ -164,15 +192,18 @@ class MonitorWidget(Gtk.Frame):
             )
 
     def _update_display(self, display: Display):
+        self._is_refreshing = True
         self._display = display
+        escaped_name = GLib.markup_escape_text(display.name) if GLib else display.name
         if not display.connected:
-            self._name_label.set_markup(f"<b>{display.name}</b>  [dim]disconnected[/]")
+            self._name_label.set_markup(f"<b>{escaped_name}</b>  <small>disconnected</small>")
             self._status_label.set_text("Disconnected")
             self._info_label.set_text("")
             self.set_sensitive(False)
+            self._is_refreshing = False
             return
         self.set_sensitive(True)
-        self._name_label.set_markup(f"<b>{display.name}</b>")
+        self._name_label.set_markup(f"<b>{escaped_name}</b>")
         self._status_label.set_text("Connected")
         res = display.resolution or "unknown"
         refresh = f"{display.refresh:.2f} Hz" if display.refresh else ""
@@ -184,12 +215,14 @@ class MonitorWidget(Gtk.Frame):
         self._info_label.set_text(info)
         self._populate_resolutions(display)
         rot_idx = ROTATION_OPTIONS.index(display.rotation) if display.rotation in ROTATION_OPTIONS else 0
+        if self._rotation_handler_id:
+            self._rot_dropdown.disconnect(self._rotation_handler_id)
+            self._rotation_handler_id = None
         self._rot_dropdown.set_selected(rot_idx)
-        try:
-            self._rot_dropdown.disconnect_by_func(self._on_rotation_changed)
-        except TypeError:
-            pass
-        self._rot_dropdown.connect("notify::selected", self._on_rotation_changed)
+        self._rotation_handler_id = self._rot_dropdown.connect(
+            "notify::selected", self._on_rotation_changed
+        )
+        self._is_refreshing = False
 
     def refresh(self, display: Display):
         self._update_display(display)
@@ -345,7 +378,8 @@ class DisplayCtlApp(Adw.Application):
     def _on_cli_row_activated(self, row, cmd: str):
         try:
             import subprocess
-            subprocess.Popen(["x-terminal-emulator", "-e", f"bash -c 'echo \"$ {cmd}\" && {cmd}; read -p \"Press Enter...\"'"])
+            script = f"printf '%s\\n' {shlex.quote(f'$ {cmd}')}; {cmd}; read -r -p 'Press Enter...'"
+            subprocess.Popen(["x-terminal-emulator", "-e", "bash", "-lc", script])
         except FileNotFoundError:
             pass
 
@@ -488,7 +522,7 @@ class DisplayCtlApp(Adw.Application):
 
 
 def run_gui():
-    if Gtk is None:
+    if GLib is None:
         print("Error: PyGObject (gi) with GTK 4.0 is required for the GUI. "
               "Install python3-gi and gir1.2-gtk-4.0, or use the snap package.", file=sys.stderr)
         sys.exit(1)

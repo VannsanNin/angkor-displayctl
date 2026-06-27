@@ -223,16 +223,19 @@ class GnomeBackend(DisplayBackend):
         dry_run: bool = False,
         verbose: bool = False,
     ) -> None:
-        mode_map = {
-            "mirror": self.mirror,
-            "duplicate": self.mirror,
-            "extend": self.extend,
-            "second": self.second_only,
-            "pc": self.pc_only,
-        }
-        fn = mode_map.get(mode)
-        if fn:
-            fn(dry_run=dry_run, verbose=verbose, primary=primary, arrange=arrange)
+        if mode in ("mirror", "duplicate"):
+            self.mirror(dry_run=dry_run, verbose=verbose)
+        elif mode == "extend":
+            self.extend(
+                dry_run=dry_run,
+                verbose=verbose,
+                primary=primary,
+                arrange=arrange,
+            )
+        elif mode == "second":
+            self.second_only(dry_run=dry_run, verbose=verbose)
+        elif mode == "pc":
+            self.pc_only(dry_run=dry_run, verbose=verbose)
 
     def set_brightness(
         self,

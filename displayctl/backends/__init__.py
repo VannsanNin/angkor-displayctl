@@ -14,6 +14,10 @@ log = logging.getLogger("displayctl")
 
 def _is_gnome() -> bool:
     try:
+        from gi.repository import Gio
+    except ImportError:
+        return False
+    try:
         result = subprocess.run(
             ["gdbus", "call", "--session",
              "--dest", "org.gnome.Mutter.DisplayConfig",

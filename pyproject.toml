@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "displayctl"
-version = "1.1.4"
+version = "1.1.5"
 description = "Multi-monitor display mode controller"
 readme = "README.md"
 requires-python = ">=3.10"
-license = {text = "MIT"}
+license = "MIT"
 authors = [
     {name = "Displayctl Maintainer", email = "maintainer@displayctl.dev"},
 ]
@@ -16,7 +16,6 @@ classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Environment :: Console",
     "Intended Audience :: End Users/Desktop",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: POSIX :: Linux",
     "Programming Language :: Python :: 3",
     "Topic :: Desktop Environment :: Screen Capture",
@@ -25,6 +24,10 @@ dependencies = [
     "click>=8.0",
     "rich>=10.0",
 ]
+
+[project.optional-dependencies]
+wayland = ["pyinotify"]
+dev = ["pytest", "pytest-mock"]
 
 [project.urls]
 Homepage = "https://github.com/VannsanNin/angkor-displayctl"
@@ -39,3 +42,6 @@ displayctl-gui = "displayctl.gui:run_gui"
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
+
+[tool.setuptools.packages.find]
+include = ["displayctl*"]

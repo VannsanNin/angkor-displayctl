@@ -3,7 +3,7 @@ import os
 import sys
 import subprocess
 import logging
-import hashlib
+import shutil
 from pathlib import Path
 from typing import Optional
 
@@ -51,7 +51,7 @@ def run_cmd(
         log.debug(f"Running: {cmd_str}")
     if dry_run:
         log.info(f"[DRY-RUN] Would run: {cmd_str}")
-        return subprocess.CompletedProcess(cmd, 0, stdout=b"", stderr=b"")
+        return subprocess.CompletedProcess(cmd, 0, stdout="", stderr="")
     try:
         result = subprocess.run(
             cmd,
@@ -73,7 +73,7 @@ def run_cmd(
 
 
 def which(cmd: str) -> Optional[str]:
-    return subprocess.run(["which", cmd], capture_output=True, text=True).stdout.strip() or None
+    return shutil.which(cmd)
 
 
 def read_edid(connector: str) -> bytes:

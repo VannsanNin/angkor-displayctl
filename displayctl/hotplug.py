@@ -1,12 +1,10 @@
 from __future__ import annotations
-import os
 import time
 import logging
-import select
+import subprocess
 from pathlib import Path
-from typing import Optional
 
-from displayctl.profile import find_matching_profile, load_profile
+from displayctl.profile import apply_profile_displays, find_matching_profile, load_profile
 from displayctl.backends.base import DisplayBackend
 from displayctl.utils import DRM_PATH
 
@@ -78,8 +76,17 @@ def _on_hotplug(backend: DisplayBackend, notify: bool = True) -> None:
         profile_displays = load_profile(profile_name)
         if profile_displays:
             log.info(f"Auto-applying profile '{profile_name}' after hotplug")
+            apply_profile_displays(profile_displays, backend)
             if notify:
-                os.system(f'notify-send "displayctl" "Applied profile: {profile_name}" 2>/dev/null')
+                try:
+                    subprocess.run(
+                        ["notify-send", "displayctl", f"Applied profile: {profile_name}"],
+                        stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL,
+                        check=False,
+                    )
+                except FileNotFoundError:
+                    log.debug("notify-send is not available")
     else:
         log.debug("No matching profile found for current display layout")
 

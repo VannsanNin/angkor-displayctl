@@ -1,5 +1,6 @@
 from __future__ import annotations
 from click.testing import CliRunner
+from displayctl import __version__
 from displayctl.cli import cli
 
 
@@ -14,7 +15,7 @@ def test_version():
     runner = CliRunner()
     result = runner.invoke(cli, ["--version"])
     assert result.exit_code == 0
-    assert "1.0.0" in result.output
+    assert __version__ in result.output
 
 
 def test_status_no_backend():
